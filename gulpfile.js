@@ -11,7 +11,8 @@ var     browserify = require('browserify'),
         rename     = require('gulp-rename'),
         sourceMaps = require('gulp-sourcemaps'),
         source     = require('vinyl-source-stream'),
-        watchify   = require('watchify');
+        watchify   = require('watchify'),
+        markdown = require('gulp-markdown');
 
 var config = {
     js: {
@@ -26,23 +27,34 @@ var config = {
 function bundle (bundler) {
 
     // Add options to add to "base" bundler passed as parameter
-    bundler
-      .bundle()                                                        // Start bundle
-      .pipe(source(config.js.src))                        // Entry point
-      .pipe(buffer())                                           // Convert to gulp pipeline
-      .pipe(rename(config.js.outputFile))          // Rename output from 'main.js'
-                                                                              //   to 'bundle.js'
-      .pipe(sourceMaps.init({ loadMaps : true }))  // Strip inline source maps
-      .pipe(sourceMaps.write(config.js.mapDir))    // Save source maps to their
-                                                                                      //   own directory
-      .pipe(gulp.dest(config.js.outputDir))        // Save 'bundle' to build/
-      .pipe(livereload());                                       // Reload browser if relevant
+    try {
+      bundler
+        .bundle()                                                        // Start bundle
+        .pipe(source(config.js.src))                        // Entry point
+        .pipe(buffer())                                           // Convert to gulp pipeline
+        .pipe(rename(config.js.outputFile))          // Rename output from 'main.js'
+                                                                                //   to 'bundle.js'
+        .pipe(sourceMaps.init({ loadMaps : true }))  // Strip inline source maps
+        .pipe(sourceMaps.write(config.js.mapDir))    // Save source maps to their
+                                                                                        //   own directory
+        .pipe(gulp.dest(config.js.outputDir))        // Save 'bundle' to build/
+        .pipe(livereload());                                       // Reload browser if relevant
+      } catch(err) {
+        console.log(err);
+      }
 }
 
 gulp.task('bundle', function () {
     var bundler = browserify(config.js.src)  // Pass browserify the entry point
     bundle(bundler);  // Chain other options -- sourcemaps, rename, etc.
 })
+
+gulp.task('markdown', function () {
+    return gulp.src('doc/torch3d.md')
+        .pipe(markdown())
+        .pipe(rename("torch_doc.html"))
+        .pipe(gulp.dest('build'));
+});
 
 gulp.task('watchify', function(){
    watchify.args.debug = true;

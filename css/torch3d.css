@@ -1,0 +1,59 @@
+#torch { 
+	//width:300px; height: 600px; 
+	border: 1px solid black;
+	//margin: 10px;
+	padding: 0px;
+	background: #6a717c;
+
+}
+
+.torch-container {
+	padding-right: 0px;
+	box-shadow: 10px 10px 5px #888888;
+}
+
+.main-container {
+//	background: #6a717c;
+}
+
+#editor { 
+	height: 500px;
+	width: 100%;
+	margin: 10px;
+	border: 1px solid black;
+//	float: right;
+
+	position: : absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.editor-container {
+//	float: right;
+	background: #c0cad8;
+	height: 600px;
+	min-width: 400px;
+	box-shadow: 10px 10px 5px #888888;
+	padding-left: 0px;
+}
+
+.play-timer {
+	float: right;
+	border: 2px solid #888888;
+	padding: 4px;
+	background: black;
+	color: green;
+	position: relative;
+	top: -3px;
+	width: 160px;
+//	box-shadow: 5px 5px 5px #888888;
+}
+
+
+.play-timer-ms {
+	float: right;
+}
